@@ -12,22 +12,24 @@ const Button = ({buttonName, handleClick}) => {
   )
 }
 
-const SingleStat = ({text, statistic}) => {
+const StatisticLine = ({text, value}) => {
   return (
     <>
-      <p>{text} {statistic}</p>
+      <p>{text} {value}</p>
     </>
   )
 }
 
-const Statistics = ({goodStat, neutralStat, badStat, allStats, average}) => {
+const Statistics = (props) => {
+  const {goodStat, neutralStat, badStat, allStats, average, positive} = props
   return (
     <div>
-      <SingleStat text={'good'} statistic={goodStat} />
-      <SingleStat text={'neutral'} statistic={neutralStat} />
-      <SingleStat text={'bad'} statistic={badStat} />
-      <SingleStat text={'all'} statistic={allStats} />
-      <SingleStat text={'average'} statistic={average} />
+      <StatisticLine text={'good'} value={goodStat} />
+      <StatisticLine text={'neutral'} value={neutralStat} />
+      <StatisticLine text={'bad'} value={badStat} />
+      <StatisticLine text={'all'} value={allStats} />
+      <StatisticLine text={'average'} value={average} />
+      <StatisticLine text={'positive'} value={positive + '%'} />
     </div>
   )
 }
@@ -46,6 +48,7 @@ function App() {
   // Extra statistics
   let allFeedback = good + neutral + bad
   let average = (allFeedback - bad) / allFeedback
+  let percentPositive = (good / allFeedback) * 100
 
   console.log('good:', good, 'neutral:', neutral, 'bad', bad)
 
@@ -56,7 +59,9 @@ function App() {
       <Button buttonName={'neutral'} handleClick={incrementNeutral} />
       <Button buttonName={'bad'} handleClick={incrementBad} />
       <Title title={'statistics'} />
-      <Statistics goodStat={good} neutralStat={neutral} badStat={bad} allStats={allFeedback} average={average} />
+      <Statistics goodStat={good} neutralStat={neutral} badStat={bad} allStats={allFeedback}
+       average={average} positive={percentPositive} 
+       />
     </div>
   )
 }
